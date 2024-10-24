@@ -2,9 +2,9 @@ package org.expensetracker.controller;
 
 import java.io.IOException;
 
-import org.expensetracker.model.Expense;
 import org.expensetracker.model.ExpensesList;
 import org.expensetracker.utils.JsonData;
+import org.expensetracker.utils.CommandValidator;
 
 public class ExpenseController {
     ExpensesList expensesList;
@@ -22,7 +22,7 @@ public class ExpenseController {
                 String arg3 = command[3];
                 String arg4 = command[4];
 
-                if (!validateArguments(arg1, arg2, arg3, arg4)) {
+                if (!CommandValidator.validateAddingArguments(arg1, arg2, arg3, arg4)) {
                     return;
                 }
 
@@ -54,7 +54,26 @@ public class ExpenseController {
                 }
             }
             case "delete" -> {
-                System.out.printf("Expense deleted successfully\n");
+                if (command.length != 3) {
+                    System.err.println("Invalid Argument: ");
+                    return;
+                }
+                String arg1 = command[1];
+                String arg2 = command[2];
+
+                if (!CommandValidator.validateTwoArguments("--id", arg1, arg2)) {
+                    return;
+                }
+
+                try {
+                    expensesList.deleteExpense(Integer.parseInt(arg2));
+                    JsonData.saveInFileJsonData(expensesList.getExpenses());
+                    System.out.printf("Expense deleted successfully\n");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
             case "update" -> {
                 System.out.printf("Expense deleted successfully\n");
@@ -73,28 +92,4 @@ public class ExpenseController {
         }
     }
 
-    private boolean validateArguments(String arg1, String arg2, String arg3, String arg4) {
-        if (arg1.isEmpty() || arg3.isEmpty()) {
-            System.err.println("Syntax Error: Empty argument");
-            return false;
-        }
-
-        if (arg1.equals("--amount") && Integer.parseInt(arg2) < 0) {
-            System.err.println("Invalid Amount value");
-            return false;
-        }
-
-        if (arg3.equals("--amount") && Integer.parseInt(arg4) < 0) {
-            System.err.println("Invalid Amount value");
-            return false;
-        }
-
-        if (!arg1.equals("--description") && !arg1.equals("--amount") && !arg3.equals("--description")
-                && !arg3.equals("--amount")) {
-            System.err.println("Invalid argument");
-            return false;
-        }
-
-        return true;
-    }
 }
