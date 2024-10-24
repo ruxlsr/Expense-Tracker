@@ -38,8 +38,11 @@ public class ExpensesList {
     /**
      * @param id
      */
-    public void deleteExpense(int id) {
-        expenses.remove(id);
+    public void deleteExpense(int id) throws Exception {
+        if (expenses.size() < id) {
+            throw new Exception("id not existant");
+        }
+        expenses.remove(id - 1);
     }
 
     /**
