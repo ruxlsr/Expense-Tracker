@@ -79,7 +79,7 @@ public class ExpenseController {
                 System.out.printf("Expense deleted successfully\n");
             }
             case "list" -> {
-                System.out.printf("Listing\n");
+                expensesList.listExpenses();
             }
 
             case "summary" -> {

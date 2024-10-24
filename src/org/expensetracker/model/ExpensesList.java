@@ -76,4 +76,13 @@ public class ExpensesList {
         });
 
     }
+
+    public void listExpenses() {
+        System.out.printf("%-5s %-10s %-20s %-7s\n", "id", "Date", "Description", "amount");
+
+        expenses.forEach(expenses -> {
+            System.out.printf("%-5d %-10s %-20s $%-7d\n", expenses.getId(), expenses.getExpenseDate().toString(),
+                    expenses.getDescription(), expenses.getAmount());
+        });
+    }
 }
