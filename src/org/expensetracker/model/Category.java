@@ -9,17 +9,27 @@ public class Category {
         this.name = name;
     }
 
+    @SuppressWarnings("unused")
     private Category() {
     }
 
+    /**
+     * @return int
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @return String
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
