@@ -1,6 +1,7 @@
 package org.expensetracker.controller;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 import org.expensetracker.model.Expense;
 import org.expensetracker.model.ExpensesList;
@@ -101,19 +102,20 @@ public class ExpenseController {
                         return;
                     }
                     int month = Integer.parseInt(arg2);
-                    System.out.println("le mois " + month);
                     summary = expensesList.getExpenses().stream()
-                            .filter(expense -> expense.getExpenseDate().getMonthValue() == month)
+                            .filter(expense -> (expense.getExpenseDate().getMonthValue() == month
+                                    && expense.getExpenseDate().getYear() == LocalDate.now().getYear()))
                             .mapToInt(Expense::getAmount)
                             .sum();
+                    System.out.printf("Total expenses for %s: $%d\n", LocalDate.now().getMonth().toString(), summary);
                 } else if (command.length == 1) {
                     summary = expensesList.getExpenses().stream().mapToInt(Expense::getAmount).sum();
+                    System.out.printf("Total expenses: $%d\n", summary);
                 } else {
                     System.err.println("Invalid number of argument");
                     return;
                 }
 
-                System.out.printf("Total expenses: $%d\n", summary);
             }
             case "update" -> {
                 if (command.length > 7) {
@@ -159,7 +161,7 @@ public class ExpenseController {
                                 return;
                             }
                         }
-
+                        System.out.println("Updated Successfully");
                     }
 
                     case 7 -> {
@@ -245,6 +247,7 @@ public class ExpenseController {
 
                         expensesList.updateAmount(Integer.parseInt(id), amount);
                         expensesList.updateDescription(Integer.parseInt(id), description);
+                        System.out.println("Updated Successfully");
                     }
 
                     default -> {

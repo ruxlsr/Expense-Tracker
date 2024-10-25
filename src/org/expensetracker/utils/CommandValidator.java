@@ -70,8 +70,8 @@ public class CommandValidator {
                 }
                 otherArg = "--amount"; // Record the other argument
             } else if (pair[0].equals("--description")) {
-                // No validation needed for description
                 otherArg = "--description"; // Record the other argument
+
             } else {
                 System.err.println("Invalid argument: " + pair[0]);
                 return false;
