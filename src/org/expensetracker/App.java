@@ -9,7 +9,7 @@ public class App {
      * @throws Exception
      */
     public static void main(String[] args) {
-        System.out.println("debut du programme");
+        System.out.println("Expenses-Tracker");
         try {
             ExpenseController expenseController = new ExpenseController();
             expenseController.Command(args);

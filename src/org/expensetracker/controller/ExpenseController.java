@@ -2,6 +2,7 @@ package org.expensetracker.controller;
 
 import java.io.IOException;
 
+import org.expensetracker.model.Expense;
 import org.expensetracker.model.ExpensesList;
 import org.expensetracker.utils.JsonData;
 import org.expensetracker.utils.CommandValidator;
@@ -14,7 +15,7 @@ public class ExpenseController {
         expensesList.setExpenses(JsonData.getDataFromJsonFile());
     }
 
-    public void Command(String[] command) {
+    public void Command(String[] command) throws Exception {
         switch (command[0]) {
             case "add" -> {
                 String arg1 = command[1];
@@ -75,19 +76,38 @@ public class ExpenseController {
                     e.printStackTrace();
                 }
             }
-            case "update" -> {
-                System.out.printf("Expense deleted successfully\n");
-            }
             case "list" -> {
                 expensesList.listExpenses();
             }
+            case "update" -> {
+                System.out.printf("Expense Updated successfully\n");
+
+            }
 
             case "summary" -> {
-                System.out.printf("Total expenses: $20\n");
+                int summary = 0;
+
+                if (command.length == 3) {
+                    String arg1 = command[1];
+                    String arg2 = command[2];
+                    if (!CommandValidator.validateTwoArguments("--month", arg1, arg2)) {
+                        return;
+                    }
+                    int month = Integer.parseInt(arg2);
+                    System.out.println("le mois " + month);
+                    summary = expensesList.getExpenses().stream()
+                            .filter(expense -> expense.getExpenseDate().getMonthValue() == month)
+                            .mapToInt(Expense::getAmount)
+                            .sum();
+                } else if (command.length == 1) {
+                    summary = expensesList.getExpenses().stream().mapToInt(Expense::getAmount).sum();
+                }
+
+                System.out.printf("Total expenses: $%d\n", summary);
             }
 
             default -> {
-                System.out.printf("Default cases");
+                System.out.printf("Invalid command");
             }
         }
     }
