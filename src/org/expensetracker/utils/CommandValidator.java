@@ -26,13 +26,13 @@ public class CommandValidator {
         return true;
     }
 
-    public static boolean validateTwoArguments(String commandName, String arg1, String arg2) {
+    public static boolean validateTwoArguments(String argName, String arg1, String arg2) {
         if (arg1.isEmpty() || arg2.isEmpty()) {
             System.err.println("Syntax Error: Empty argument");
             return false;
         }
 
-        if (!arg1.equals(commandName)) {
+        if (!arg1.equals(argName)) {
             System.err.println("Syntax Error: invalid command name");
             return false;
         }
