@@ -3,7 +3,6 @@ package org.expensetracker.controller;
 import java.io.IOException;
 import java.time.LocalDate;
 
-import org.expensetracker.model.Expense;
 import org.expensetracker.model.ExpensesList;
 import org.expensetracker.utils.JsonData;
 import org.expensetracker.utils.CommandValidator;
@@ -101,15 +100,12 @@ public class ExpenseController {
                     if (!CommandValidator.validateTwoArguments("--month", arg1, arg2)) {
                         return;
                     }
-                    int month = Integer.parseInt(arg2);
-                    summary = expensesList.getExpenses().stream()
-                            .filter(expense -> (expense.getExpenseDate().getMonthValue() == month
-                                    && expense.getExpenseDate().getYear() == LocalDate.now().getYear()))
-                            .mapToInt(Expense::getAmount)
-                            .sum();
+
+                    summary = expensesList.getSumariseMonthOfCurrYear(Integer.parseInt(arg2));
+
                     System.out.printf("Total expenses for %s: $%d\n", LocalDate.now().getMonth().toString(), summary);
                 } else if (command.length == 1) {
-                    summary = expensesList.getExpenses().stream().mapToInt(Expense::getAmount).sum();
+                    summary = expensesList.getAllSummarise();
                     System.out.printf("Total expenses: $%d\n", summary);
                 } else {
                     System.err.println("Invalid number of argument");

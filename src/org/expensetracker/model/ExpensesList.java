@@ -86,4 +86,16 @@ public class ExpensesList {
                     expenses.getDescription(), expenses.getAmount());
         });
     }
+
+    public int getSumariseMonthOfCurrYear(int month) {
+        return expenses.stream()
+                .filter(expense -> (expense.getExpenseDate().getMonthValue() == month
+                        && expense.getExpenseDate().getYear() == LocalDate.now().getYear()))
+                .mapToInt(Expense::getAmount)
+                .sum();
+    }
+
+    public int getAllSummarise() {
+        return expenses.stream().mapToInt(Expense::getAmount).sum();
+    }
 }
