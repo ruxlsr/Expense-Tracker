@@ -29,6 +29,8 @@ java -jar Expense-tracker.jar <command>
 
 You can also compile and execute whith your favorite IDE
 
+# Usage
+
 ```bash
 # Usage
 $ java -jar Expense-Tracker.jar add --description "Lunch" --amount 20
