@@ -16,6 +16,10 @@ public class ExpenseController {
     }
 
     public void Command(String[] command) throws Exception {
+        if (command.length == 0) {
+            System.err.println("Invalid  argument");
+            return;
+        }
         switch (command[0]) {
             case "add" -> {
                 if (command.length != 5) {
@@ -112,59 +116,42 @@ public class ExpenseController {
                 System.out.printf("Total expenses: $%d\n", summary);
             }
             case "update" -> {
-                if (command.length < 7) {
+                if (command.length > 7) {
                     System.err.println("Invalid number of argument");
                     return;
                 }
-                String arg1 = command[1];
-                String arg2 = command[2];
-                String arg3 = command[3];
-                String arg4 = command[4];
-                String arg5 = command[5];
-                String arg6 = command[6];
+                switch (command.length) {
+                    case 5 -> {
+                        String arg1 = command[1], arg2 = command[2], arg3 = command[3], arg4 = command[4];
+                        if (!CommandValidator.checkUpdateOneAttribute(arg1, arg2, arg3, arg4)) {
+                            return;
+                        }
 
-                if (!CommandValidator.checkUpdatingArgs(arg1, arg2, arg3, arg4, arg5, arg6)) {
-                    return;
-                }
+                        String description = null, amount = null;
+                        String id;
 
-                String id = null;
-                String description = null;
-                String amount = null;
-
-                switch (arg1) {
-                    case "--description" -> {
-                        description = arg2;
-
-                        switch (arg3) {
-                            case "--id" -> {
-                                amount = arg6;
+                        switch (arg1) {
+                            case "--description" -> {
+                                description = arg2;
                                 id = arg4;
+                                expensesList.updateDescription(Integer.parseInt(id), description);
+                            }
+
+                            case "--id" -> {
+                                id = arg1;
+                                if (arg3.equals("--amount")) {
+                                    amount = arg4;
+                                    expensesList.updateAmount(Integer.parseInt(id), amount);
+                                } else {
+                                    expensesList.updateDescription(Integer.parseInt(id), description);
+                                    description = arg4;
+                                }
                             }
 
                             case "--amount" -> {
-                                amount = arg4;
-                                id = arg6;
-                            }
-
-                            default -> {
-                                System.err.println("Invalid argument");
-                                return;
-                            }
-                        }
-
-                    }
-
-                    case "--amount" -> {
-                        amount = arg2;
-                        switch (arg3) {
-                            case "--id" -> {
-                                description = arg6;
+                                amount = arg2;
                                 id = arg4;
-                            }
-
-                            case "--description" -> {
-                                description = arg4;
-                                id = arg6;
+                                expensesList.updateAmount(Integer.parseInt(id), amount);
                             }
 
                             default -> {
@@ -172,35 +159,98 @@ public class ExpenseController {
                                 return;
                             }
                         }
+
                     }
 
-                    case "--id" -> {
-                        id = arg2;
-                        switch (arg3) {
+                    case 7 -> {
+                        String arg1 = command[1], arg2 = command[2], arg3 = command[3], arg4 = command[4],
+                                arg5 = command[5],
+                                arg6 = command[6];
+
+                        if (!CommandValidator.checkUpdatingArgs(arg1, arg2, arg3, arg4, arg5, arg6)) {
+                            return;
+                        }
+
+                        String id = null;
+                        String description = null;
+                        String amount = null;
+
+                        switch (arg1) {
+                            case "--description" -> {
+                                description = arg2;
+
+                                switch (arg3) {
+                                    case "--id" -> {
+                                        amount = arg6;
+                                        id = arg4;
+                                    }
+
+                                    case "--amount" -> {
+                                        amount = arg4;
+                                        id = arg6;
+                                    }
+
+                                    default -> {
+                                        System.err.println("Invalid argument");
+                                        return;
+                                    }
+                                }
+
+                            }
+
                             case "--amount" -> {
-                                description = arg6;
-                                amount = arg4;
+                                amount = arg2;
+                                switch (arg3) {
+                                    case "--id" -> {
+                                        description = arg6;
+                                        id = arg4;
+                                    }
+
+                                    case "--description" -> {
+                                        description = arg4;
+                                        id = arg6;
+                                    }
+
+                                    default -> {
+                                        System.err.println("Invalid argument");
+                                        return;
+                                    }
+                                }
                             }
 
-                            case "--description" -> {
-                                description = arg4;
-                                amount = arg6;
-                            }
+                            case "--id" -> {
+                                id = arg2;
+                                switch (arg3) {
+                                    case "--amount" -> {
+                                        description = arg6;
+                                        amount = arg4;
+                                    }
 
+                                    case "--description" -> {
+                                        description = arg4;
+                                        amount = arg6;
+                                    }
+
+                                    default -> {
+                                        System.err.println("Invalid argument");
+                                        return;
+                                    }
+                                }
+                            }
                             default -> {
                                 System.err.println("Invalid argument");
                                 return;
                             }
                         }
+
+                        expensesList.updateAmount(Integer.parseInt(id), amount);
+                        expensesList.updateDescription(Integer.parseInt(id), description);
                     }
+
                     default -> {
-                        System.err.println("Invalid argument");
-                        return;
+                        System.err.println("missing argument");
                     }
                 }
-                // TODO("Test this");
-                expensesList.updateAmount(Integer.parseInt(arg6), amount);
-                expensesList.updateDescription(Integer.parseInt(arg6), description);
                 JsonData.saveInFileJsonData(expensesList);
 
             }
