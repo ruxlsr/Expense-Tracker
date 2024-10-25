@@ -1,18 +1,57 @@
-## Getting Started
+# Expense-Tracker
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+Hi. this is a CLI app to track Exepenses exercise provided by [rodmap.sh](https://roadmap.sh/projects/expense-tracker);
 
-## Folder Structure
+# Features
 
-The workspace contains two folders by default, where:
+- add an expense with a description and amount.
+- update an expense.
+- delete an expense.
+- view all expenses.
+- view a summary of all expenses.
+- Users can view a summary of expenses for a specific month (of current year).
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+# installation
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+1. Clone this repository
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+```bash
+git clone https://github.com/ruxlsr/Expense-Tracker.git
+cd Expense-Tracker/src
+```
 
-## Dependency Management
+2. Execute
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+```bash
+# the jar file was exported with openjdk 21.0.5-ea 2024-10-15
+java -jar Expense-tracker.jar <command>
+```
+
+You can also compile and execute whith your favorite IDE
+
+```bash
+# Usage
+$ java -jar expense-tracker add --description "Lunch" --amount 20
+# Expense added successfully (ID: 1)
+
+$ java -jar expense-tracker add --description "Dinner" --amount 10
+# Expense added successfully (ID: 2)
+
+$ java -jar expense-tracker list
+# Expenses-Tracker
+# id    Date       Description          amount
+# 1     2023-05-26 buy grocery          $200
+# 4     2023-10-29 Gas refill           $40
+
+$ java -jar expense-tracker summary
+# Total expenses: $30
+
+$ java -jar expense-tracker delete --id 1
+# Expense deleted successfully
+
+$ java -jar expense-tracker summary
+# Total expenses: $20
+
+$ expense-tracker summary --month 8
+# Total expenses for August: $20
+```
