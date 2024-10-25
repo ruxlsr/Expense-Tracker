@@ -49,15 +49,15 @@ public class ExpensesList {
      * @param id
      * @param description
      */
-    public void updateDescription(int id, Optional<String> description) {
-        description.ifPresent((value) -> {
-            if (!value.isEmpty()) {
-                expenses.get(id).setDescription(value);
-            } else {
-                System.err.println("Error: Empty description");
-            }
+    public void updateDescription(int id, String description) {
 
-        });
+        if (description.isEmpty()) {
+
+            System.err.println("Error: Empty description");
+            return;
+        }
+
+        expenses.get(id).setDescription(description);
 
     }
 
@@ -65,15 +65,14 @@ public class ExpensesList {
      * @param id
      * @param amount
      */
-    public void updateAmount(int id, Optional<String> amount) {
+    public void updateAmount(int id, String amount) {
 
-        amount.ifPresent((value) -> {
-            if (!value.isEmpty()) {
-                expenses.get(id).setAmount(Integer.parseInt(value));
-            } else {
-                System.err.println("Error: Empty amount");
-            }
-        });
+        if (amount.isEmpty()) {
+            System.err.println("Error: Empty amount");
+            return;
+        }
+
+        expenses.get(id).setAmount(Integer.parseInt(amount));
 
     }
 
