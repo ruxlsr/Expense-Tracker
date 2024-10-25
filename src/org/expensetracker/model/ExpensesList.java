@@ -3,7 +3,6 @@ package org.expensetracker.model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class ExpensesList {
     List<Expense> expenses;
@@ -50,14 +49,12 @@ public class ExpensesList {
      * @param description
      */
     public void updateDescription(int id, String description) {
-
         if (description.isEmpty()) {
-
             System.err.println("Error: Empty description");
             return;
         }
 
-        expenses.get(id).setDescription(description);
+        expenses.get(id - 1).setDescription(description);
 
     }
 
@@ -72,7 +69,7 @@ public class ExpensesList {
             return;
         }
 
-        expenses.get(id).setAmount(Integer.parseInt(amount));
+        expenses.get(id - 1).setAmount(Integer.parseInt(amount));
 
     }
 
