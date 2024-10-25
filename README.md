@@ -31,27 +31,37 @@ You can also compile and execute whith your favorite IDE
 
 ```bash
 # Usage
-$ java -jar expense-tracker add --description "Lunch" --amount 20
+$ java -jar Expense-Tracker.jar add --description "Lunch" --amount 20
 # Expense added successfully (ID: 1)
 
-$ java -jar expense-tracker add --description "Dinner" --amount 10
+$ java -jar Expense-Tracker.jar add --description "Dinner" --amount 10
 # Expense added successfully (ID: 2)
 
-$ java -jar expense-tracker list
+$ java -jar Expense-Tracker.jar list
 # Expenses-Tracker
 # id    Date       Description          amount
 # 1     2023-05-26 buy grocery          $200
 # 4     2023-10-29 Gas refill           $40
 
-$ java -jar expense-tracker summary
+$ java -jar Expense-Tracker.jar summary
 # Total expenses: $30
 
-$ java -jar expense-tracker delete --id 1
+$ java -jar Expense-Tracker.jar delete --id 1
 # Expense deleted successfully
 
-$ java -jar expense-tracker summary
+$ java -jar Expense-Tracker.jar summary
 # Total expenses: $20
 
-$ expense-tracker summary --month 8
+$ java -jar Expense-Tracker.jar summary --month 8
 # Total expenses for August: $20
+
+$ java -jar Expense-Tracker.jar update --id 1 --description "Buy a grocery" --amount 250
+# Expesense updated successfully
+
+$ java -jar Expense-Tracker.jar update --id 1 --description "Buy a grocery"
+# Expesense updated successfully
+
+$ java -jar Expense-Tracker.jar update --id 1 --amount 250
+# Expesense updated successfully
+
 ```
