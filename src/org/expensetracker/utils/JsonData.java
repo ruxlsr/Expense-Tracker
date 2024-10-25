@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.expensetracker.model.Expense;
+import org.expensetracker.model.ExpensesList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -55,8 +56,8 @@ public class JsonData {
 
     }
 
-    public static void saveInFileJsonData(List<Expense> expenses) throws IOException {
-        JSONArray expenseJsonArray = new JSONArray(expenses);
+    public static void saveInFileJsonData(ExpensesList expenses) throws IOException {
+        JSONArray expenseJsonArray = new JSONArray(expenses.getExpenses());
 
         StringBuilder content = new StringBuilder();
         content.append("{");
