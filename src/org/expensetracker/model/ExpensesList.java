@@ -61,12 +61,17 @@ public class ExpensesList {
     /**
      * @param id
      * @param amount
+     * @throws Exception
      */
-    public void updateAmount(int id, String amount) {
+    public void updateAmount(int id, String amount) throws Exception {
 
         if (amount.isEmpty()) {
             System.err.println("Error: Empty amount");
             return;
+        }
+
+        if (expenses.size() < id) {
+            throw new Exception("Error: invalid id");
         }
 
         expenses.get(id - 1).setAmount(Integer.parseInt(amount));
