@@ -1,7 +1,6 @@
 package org.expensetracker.utils;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
